@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 function ProductList() {
     const dispatch = useDispatch();
     const cart = useSelector(state => state.cart.items);
+    const cartAmount = useSelector(state => state.cart.amount);
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
     const [addedToCart, setAddedToCart] = useState({});
@@ -260,16 +261,16 @@ function ProductList() {
             ...prevState,
             [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
         }));
-        updateCartAmount();
+        // setCartItemsAmount(prevState => prevState + 1);
     };
 
-    const updateCartAmount = () => {
-        let amount = 0;
-        cart.forEach((item) => {
-            amount += item.quantity;
-        });
-        setCartItemsAmount(amount);
-    }
+    // const updateCartAmount = () => {
+    //     let amount = 0;
+    //     cart.forEach((item) => {
+    //         amount += item.quantity;
+    //     });
+    //     setCartItemsAmount(amount);
+    // }
 
     return (
         <div>
@@ -290,7 +291,7 @@ function ProductList() {
                     <div><a href="#" onClick={(e) => handlePlantsClick(e)} style={styleA}>Plants</a></div>
                     <div><a href="#" onClick={(e) => handleCartClick(e)} style={styleA}>
                         <h1 className='cart'>
-                            <div className="cart_quantity_count">{cartItemsAmount}</div>
+                            <div className="cart_quantity_count">{cartAmount}</div>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" id="IconChangeColor"
                                  height="68" width="68">
                                 <rect width="156" height="156" fill="none"></rect>
@@ -329,7 +330,7 @@ function ProductList() {
                     ))}
                 </div>
             ) : (
-                <CartItem onContinueShopping={handleContinueShopping} updateCartAmount={updateCartAmount} />
+                <CartItem onContinueShopping={handleContinueShopping} />
             )}
         </div>
     );
