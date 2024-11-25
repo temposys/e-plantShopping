@@ -187,11 +187,6 @@ body {
     border-right: none;
 }
 
-.btn-disabled {
-    opacity: 0.5; /* Reduce opacity to visually indicate disabled state */
-    cursor: not-allowed; /* Change cursor to indicate that the button is not clickable */
-}
-
 /* Add Media Query for responsiveness */
 @media (max-width: 768px) {
     .product-card {
@@ -254,3 +249,16 @@ body {
         text-align: center; /* Align text to the center */
       }
   }
+
+.btn-disabled {
+    opacity: 0.5; /* Reduce opacity to visually indicate disabled state */
+    cursor: not-allowed !important; /* Change cursor to indicate that the button is not clickable */
+}
+
+.product-button.btn-disabled {
+    background-color: gray;
+}
+
+.product-button.btn-disabled:hover {
+    background-color: gray;
+}

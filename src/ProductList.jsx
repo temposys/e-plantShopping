@@ -256,21 +256,18 @@ function ProductList() {
     };
 
     const handleAddToCart = (product) => {
-        dispatch(addItem(product));
-        setAddedToCart((prevState) => ({
-            ...prevState,
-            [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
-        }));
-        // setCartItemsAmount(prevState => prevState + 1);
+        if (!inCart(product.name)) {
+            dispatch(addItem(product));
+            setAddedToCart((prevState) => ({
+                ...prevState,
+                [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
+            }));
+        }
     };
 
-    // const updateCartAmount = () => {
-    //     let amount = 0;
-    //     cart.forEach((item) => {
-    //         amount += item.quantity;
-    //     });
-    //     setCartItemsAmount(amount);
-    // }
+    const inCart = (itemName) => {
+        return cart.filter((item) => item.name === itemName).length > 0;
+    }
 
     return (
         <div>
@@ -320,8 +317,8 @@ function ProductList() {
                                         <img className="product-image" src={plant.image} alt={plant.name}/>
                                         <div className="product-title">{plant.name}</div>
                                         {/*Similarly like the above plant.name show other details like description and cost*/}
-                                        <button className="product-button" onClick={() => handleAddToCart(plant)}>
-                                            Add to Cart
+                                        <button className={inCart(plant.name) ? 'product-button btn-disabled' : 'product-button cart-item-button-dec'} onClick={() => handleAddToCart(plant)}>
+                                            {inCart(plant.name) ? 'Added to Cart' : 'Add to Cart'}
                                         </button>
                                     </div>
                                 ))}
